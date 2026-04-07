@@ -10,11 +10,10 @@ import lombok.Setter;
 public class AuthRequest {
 
     @Email
-    @NotBlank
+    @NotBlank(message = "Username is required")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
     private String password;
-
-
+    
 }

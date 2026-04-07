@@ -70,8 +70,11 @@ public class UserService {
         if (request.getPassword() != null)
             user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
 
-        if (request.getAvatarUrl() != null)
-            user.setAvatarUrl(request.getAvatarUrl());
+        if (request.getBio() != null)
+            user.setBio(request.getBio());
+
+        if (request.getSkills() != null)
+            user.setSkills(request.getSkills());
 
         User updated = userRepository.save(user);
         return mapToResponse(updated);
@@ -109,7 +112,8 @@ public class UserService {
                 user.getFullName(),
                 user.getRole(),
                 user.isActive(),
-                user.getAvatarUrl()
+                user.getBio(),
+                user.getSkills()
         );
     }
 
@@ -118,6 +122,9 @@ public class UserService {
                 .getAuthentication()
                 .getName(); // we stored email in JWT
     }
+
+
+
     public UserResponse getByEmail(String email) {
 
         User user = userRepository.findByEmail(email)
@@ -143,10 +150,28 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return new PublicUserResponse(
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
+                user.getFullName(),
                 user.isActive()
         );
+    }
+
+    public List<PublicUserResponse> searchUsers(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return List.of();
+        }
+        return userRepository.searchMembers(query, org.springframework.data.domain.PageRequest.of(0, 20))
+                .stream()
+                .map(user -> new PublicUserResponse(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.isActive()
+                ))
+                .toList();
     }
 
     public List<UserResponse> getAllUsers() {
@@ -155,6 +180,25 @@ public class UserService {
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
+    }
+
+    public List<AdminUserResponse> getAllAdminUsers() {
+
+        return userRepository.findAll()
+                .stream()
+                .map(this::mapToAdminResponse)
+                .toList();
+    }
+
+    private AdminUserResponse mapToAdminResponse(User user) {
+        return new AdminUserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFullName(),
+                user.getRole(),
+                user.isActive()
+        );
     }
 
     public void deleteUserById(UUID id) {

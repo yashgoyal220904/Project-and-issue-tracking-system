@@ -330,17 +330,17 @@ POST /api/auth/refresh
 
 #### 3.1.4 Project Management Module
 
-| Req ID | Requirement | Priority |
-|--------|-------------|----------|
-| FR-PROJ-001 | Admin users shall be able to create new projects | High |
-| FR-PROJ-002 | Each project shall have a unique project key (e.g., PROJ-001) | High |
-| FR-PROJ-003 | The system shall store project name, description, and key | High |
-| FR-PROJ-004 | Admin users shall be able to view all projects | High |
-| FR-PROJ-005 | Member users shall only view projects they are assigned to | High |
-| FR-PROJ-006 | Admin users shall be able to update project details | High |
-| FR-PROJ-007 | Admin users shall be able to delete projects | High |
-| FR-PROJ-008 | Deleting a project shall also delete all associated issues | Medium |
-| FR-PROJ-009 | The system shall track project creation date and last updated date | Medium |
+| Req ID | Requirement                                                              | Priority |
+|--------|--------------------------------------------------------------------------|----------|
+| FR-PROJ-001 | Anyone users shall be able to create new projects  and become teamLeader | High |
+| FR-PROJ-002 | Each project shall have a unique project key (e.g., PROJ-001)            | High |
+| FR-PROJ-003 | The system shall store project name, description, and key                | High |
+| FR-PROJ-004 | Admin users shall be able to view all projects                           | High |
+| FR-PROJ-005 | Member users shall only view projects they are assigned to               | High |
+| FR-PROJ-006 | teamLeader users shall be able to update project details                 | High |
+| FR-PROJ-007 | teamLeader users shall be able to delete projects                        | High |
+| FR-PROJ-008 | Deleting a project shall also delete all associated issues               | Medium |
+| FR-PROJ-009 | The system shall track project creation date and last updated date       | Medium |
 
 **API Endpoints:**
 

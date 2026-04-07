@@ -74,10 +74,15 @@ public class UserController {
         return ResponseEntity.ok(userService.getPublicUserById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<PublicUserResponse>> searchUsers(@RequestParam String query) {
+        return ResponseEntity.ok(userService.searchUsers(query));
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/all")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<com.example.PaITS.user.dto.AdminUserResponse>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllAdminUsers());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
