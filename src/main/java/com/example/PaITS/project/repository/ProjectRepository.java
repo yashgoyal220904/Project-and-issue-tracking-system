@@ -9,6 +9,7 @@ import java.util.UUID;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, UUID> {
 
-    // FR-PROJ-005: Custom finder to show projects created by a specific user
     List<Project> findByCreatedBy(UUID createdBy);
+
+    List<Project> findByMembersId(UUID userId);
 }

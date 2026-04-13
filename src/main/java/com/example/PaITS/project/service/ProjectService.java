@@ -1,27 +1,27 @@
-package com.example.PaITS.project.service; // Only one package line, matching your path
+package com.example.PaITS.project.service;
 
-import com.example.PaITS.project.entity.Project; // Fixed import to use PaITS
+import com.example.PaITS.project.dto.ProjectRequestDTO;
+import com.example.PaITS.project.dto.ProjectResponseDTO;
+import com.example.PaITS.user.entity.User;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ProjectService {
 
-    // FR-PROJ-001: Create project
-    Project saveProject(Project project);
+    ProjectResponseDTO saveProject(ProjectRequestDTO request, UUID creatorId);
 
-    // FR-PROJ-004: Admin view all
-    List<Project> findAll();
+    List<ProjectResponseDTO> findAll();
 
-    // FR-PROJ-005: Member view assigned
-    List<Project> findAssignedProjects(UUID userId);
+    List<ProjectResponseDTO> findAssignedProjects(UUID userId);
 
-    // For GET /api/projects/{id}
-    Optional<Project> findById(UUID id);
+    ProjectResponseDTO findById(UUID id, User currentUser);
 
-    // FR-PROJ-006: Update project details
-    Project updateProject(UUID id, Project details);
+    ProjectResponseDTO updateProject(UUID id, ProjectRequestDTO details, User currentUser);
 
-    // FR-PROJ-007 & 008: Delete project and associated items
-    void deleteById(UUID id);
+    void deleteProject(UUID id, User currentUser);
+
+    ProjectResponseDTO addMember(UUID projectId, UUID userId, User currentUser);
+
+    ProjectResponseDTO removeMember(UUID projectId, UUID userId, User currentUser);
 }

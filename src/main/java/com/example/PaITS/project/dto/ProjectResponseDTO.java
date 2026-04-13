@@ -1,5 +1,7 @@
 package com.example.PaITS.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -9,10 +11,11 @@ public class ProjectResponseDTO {
     private String name;
     private String description;
     private boolean isActive;
+    private UUID createdBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Getters and Setters
+   
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 
@@ -25,8 +28,12 @@ public class ProjectResponseDTO {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+    @JsonProperty("isActive")
     public boolean isActive() { return isActive; }
     public void setActive(boolean active) { this.isActive = active; }
+
+    public UUID getCreatedBy() { return createdBy; }
+    public void setCreatedBy(UUID createdBy) { this.createdBy = createdBy; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

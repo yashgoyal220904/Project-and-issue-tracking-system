@@ -34,7 +34,9 @@ public class User {
     private String role = Role.MEMBER;     // ADMIN, MEMBER
 
     public boolean isActive;
-    public String avatarUrl;
+
+    public String bio;
+    public String skills;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
