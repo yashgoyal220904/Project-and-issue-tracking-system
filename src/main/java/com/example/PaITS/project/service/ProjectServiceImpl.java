@@ -5,7 +5,7 @@ import com.example.PaITS.project.dto.ProjectResponseDTO;
 import com.example.PaITS.project.entity.Project;
 import com.example.PaITS.project.repository.ProjectRepository;
 import com.example.PaITS.user.entity.User;
-import com.example.PaITS.user.repository.UserRepository;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     // ---- Helper: check if user is Admin ----
     private boolean isAdmin(User user) {
@@ -33,15 +31,15 @@ public class ProjectServiceImpl implements ProjectService {
         return project.getCreatedBy().equals(user.getId());
     }
 
-    // ---- Helper: check if user is an assigned member ----
-    private boolean isMember(Project project, User user) {
-        return project.getMembers().stream()
-                .anyMatch(m -> m.getId().equals(user.getId()));
-    }
+    // // ---- Helper: check if user is an assigned member ----
+    // private boolean isMember(Project project, User user) {
+    //     return project.getMembers().stream()
+    //             .anyMatch(m -> m.getId().equals(user.getId()));
+    // }
 
     // ---- Helper: check if user has ANY access to this project ----
     private boolean hasAccess(Project project, User user) {
-        return isAdmin(user) || isLeader(project, user) || isMember(project, user);
+        return isAdmin(user) || isLeader(project, user) /*isMember(project, user)*/;
     }
 
     // ===================== CREATE =====================
@@ -147,10 +145,10 @@ public class ProjectServiceImpl implements ProjectService {
             throw new RuntimeException("Unauthorized: Only Admins and the Project Leader can add members.");
         }
 
-        User newMember = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        // User newMember = userRepository.findById(userId)
+                // .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-        project.getMembers().add(newMember);
+        // project.getMembers().add(newMember);
         Project saved = projectRepository.save(project);
         return mapToDTO(saved);
     }
@@ -166,7 +164,7 @@ public class ProjectServiceImpl implements ProjectService {
             throw new RuntimeException("Unauthorized: Only Admins and the Project Leader can remove members.");
         }
 
-        project.getMembers().removeIf(m -> m.getId().equals(userId));
+        // project.getMembers().removeIf(m -> m.getId().equals(userId));
         Project saved = projectRepository.save(project);
         return mapToDTO(saved);
     }

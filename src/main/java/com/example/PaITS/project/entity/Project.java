@@ -1,9 +1,7 @@
 package com.example.PaITS.project.entity;
 
-import com.example.PaITS.user.entity.User;
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 import java.util.UUID;
 import java.time.LocalDateTime;
 
@@ -27,14 +25,6 @@ public class Project {
     private int issueSequence;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    @ManyToMany
-    @JoinTable(
-            name = "project_members",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> members = new HashSet<>();
 
     // Getters and Setters
 
@@ -108,14 +98,6 @@ public class Project {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Set<User> getMembers() {
-        return members;
-    }
-
-    public void setMembers(Set<User> members) {
-        this.members = members;
     }
 
     @PrePersist
